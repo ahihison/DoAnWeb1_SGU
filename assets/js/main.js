@@ -36,6 +36,7 @@ var btnNext2 = $(".btn-next2");
 var btnPrev2 = $(".btn-prev2");
 var btnNext3 = $(".btn-next3");
 var btnPrev3 = $(".btn-prev3");
+var products = JSON.parse(localStorage.getItem("product"));
 const totalPage = Math.ceil(products.length / perPage);
 var productGucci = countProductGucci();
 var productAdidas = countProductAdidas();
@@ -573,6 +574,7 @@ function getCurentPage(currentPages) {
 
 function countProductGucci() {
   var productGucci = [];
+  var products = JSON.parse(localStorage.getItem("product"));
   products.map((item, index) => {
     if (item.span == "Gucci") {
       productGucci.push(products[index]);
@@ -582,6 +584,7 @@ function countProductGucci() {
 }
 function countProductAdidas() {
   var productAdidas = [];
+  var products = JSON.parse(localStorage.getItem("product"));
   products.map((item, index) => {
     if (item.span == "Adidas") {
       productAdidas.push(products[index]);
@@ -592,7 +595,8 @@ function countProductAdidas() {
 
 function renderProduct(start, end) {
   html = "";
-
+  var products = JSON.parse(localStorage.getItem("product"));
+  console.log("product ne", products);
   const content = products.map((item, index) => {
     if (index >= start && index < end) {
       html += `<div class="pro">`;
@@ -764,6 +768,7 @@ function changePrice(i) {
 }
 
 function getIndexProduct(index) {
+  var detailProduct = JSON.parse(localStorage.getItem("detailProduct"));
   html = "";
   html +=
     `<div class="detail-pro">
@@ -842,15 +847,19 @@ var containerDetail = $(".container-detail");
 
 function innerDetail() {
   const currentProduct = $$("#product1 .pro");
-
+  var value;
   var filterInput = $(".search-text");
   var filterValue = filterInput.value.toUpperCase();
   for (let i = 0; i < currentProduct.length; i++) {
     currentProduct[i].addEventListener("click", () => {
       if (filterValue != "") {
         if (currentPages < 2) {
-          console.log(productFilter[i].id);
-          getIndexProduct(productFilter[i].id - 1);
+          for (var j = 0; j < detailProducts.length; j++) {
+            if (productFilter[i].id == detailProducts[j].id) {
+              value = j;
+            }
+          }
+          getIndexProduct(value);
           changePrice(i);
           productDetail.classList.add("active");
           containerDetail.classList.add("active");
@@ -858,9 +867,15 @@ function innerDetail() {
           var button = addToCartButtons[0];
           button.addEventListener("click", addToCartClicked);
         } else if (currentPages >= 2) {
-          getIndexProduct(
-            productFilter[i + perPage * (currentPages - 1)].id - 1
-          );
+          for (var j = 0; j < detailProducts.length; j++) {
+            if (
+              productFilter[i + perPage * (currentPages - 1)].id ==
+              detailProducts[j].id
+            ) {
+              value = j;
+            }
+          }
+          getIndexProduct(value);
           changerSmallProduct();
           changePrice(i);
           closeDetail();
@@ -870,8 +885,14 @@ function innerDetail() {
           var button = addToCartButtons[0];
           button.addEventListener("click", addToCartClicked);
         }
-      } else {
-        getIndexProduct(i);
+      } else if (checkAdidas == false) {
+        for (var j = 0; j < detailProducts.length; j++) {
+          if (productAdidas[i].id == detailProducts[j].id) {
+            value = j;
+          }
+        }
+        getIndexProduct(value);
+
         changePrice(i);
         productDetail.classList.add("active");
         containerDetail.classList.add("active");
@@ -879,7 +900,69 @@ function innerDetail() {
         var button = addToCartButtons[0];
         button.addEventListener("click", addToCartClicked);
         if (currentPages >= 2) {
-          getIndexProduct(i + perPage * (currentPages - 1));
+          for (var j = 0; j < detailProducts.length; j++) {
+            if (
+              productAdidas[i + perPage * (currentPages - 1)].id ==
+              detailProducts[j].id
+            ) {
+              value = j;
+            }
+          }
+          getIndexProduct(value);
+          changerSmallProduct();
+          changePrice(i);
+          closeDetail();
+        }
+      } else if (checkGucci == false) {
+        for (var j = 0; j < detailProducts.length; j++) {
+          if (productGucci[i].id == detailProducts[j].id) {
+            value = j;
+          }
+        }
+        getIndexProduct(value);
+        changePrice(i);
+        productDetail.classList.add("active");
+        containerDetail.classList.add("active");
+        var addToCartButtons = $$(".shop-item-button");
+        var button = addToCartButtons[0];
+        button.addEventListener("click", addToCartClicked);
+        if (currentPages >= 2) {
+          for (var j = 0; j < detailProducts.length; j++) {
+            if (
+              productGucci[i + perPage * (currentPages - 1)].id ==
+              detailProducts[j].id
+            ) {
+              value = j;
+            }
+          }
+          getIndexProduct(value);
+          changerSmallProduct();
+          changePrice(i);
+          closeDetail();
+        }
+      } else {
+        for (var j = 0; j < detailProducts.length; j++) {
+          if (products[i].id == detailProducts[j].id) {
+            value = j;
+          }
+        }
+        getIndexProduct(value);
+        changePrice(i);
+        productDetail.classList.add("active");
+        containerDetail.classList.add("active");
+        var addToCartButtons = $$(".shop-item-button");
+        var button = addToCartButtons[0];
+        button.addEventListener("click", addToCartClicked);
+        if (currentPages >= 2) {
+          for (var j = 0; j < detailProducts.length; j++) {
+            if (
+              products[i + perPage * (currentPages - 1)].id ==
+              detailProducts[j].id
+            ) {
+              value = j;
+            }
+          }
+          getIndexProduct(value);
           changerSmallProduct();
           changePrice(i);
           closeDetail();
@@ -971,7 +1054,9 @@ function ChangepageAdidas() {
     });
   }
 }
+var checkGucci = true;
 gucciProduct.addEventListener("click", () => {
+  checkGucci = false;
   procontainer.classList.add("remove");
   procontainer.classList.add("pro-container-gucci");
   pagingItem.classList.add("active");
@@ -991,7 +1076,9 @@ gucciProduct.addEventListener("click", () => {
   changePageGucci();
   innerDetail();
 });
+var checkAdidas = true;
 adidasProduct.addEventListener("click", () => {
+  checkAdidas = false;
   procontainer.classList.remove("remove");
   procontainer.classList.remove("pro-container-gucci");
   pagingItem.classList.remove("active");
@@ -1005,6 +1092,7 @@ adidasProduct.addEventListener("click", () => {
   gucciProduct.classList.remove("active");
   start = 0;
   end = perPage;
+
   renderProducAdidas(start, end);
   renderListPageAdidas(totalPageAdidas);
 
@@ -1013,6 +1101,8 @@ adidasProduct.addEventListener("click", () => {
   innerDetail();
 });
 allProduct.addEventListener("click", () => {
+  checkAdidas = true;
+  checkGucci = true;
   procontainer.classList.remove("remove");
   procontainer.classList.remove("pro-container-gucci");
   pagingItem.classList.add("active");

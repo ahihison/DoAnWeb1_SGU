@@ -5,16 +5,344 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>
+    <link rel="stylesheet" href="./assets/css/Admin.css" />
+    <link
+      rel="stylesheet"
+      href="./assets/fontawesome-free-6.2.0-web/css/all.min.css"
+    />
     <title>Document</title>
   </head>
   <body>
-    <div class="classification-product">
-      <div class="all-product">All</div>
-      <div class="gucci-product">Gucci</div>
-      <div class="adidas-product">Adidas</div>
-    </div>
+    <!-- Sidebar Menu -->
+    <nav>
+      <div class="logo-container">
+        <div class="logo-icon">
+          <i class="fa-brands fa-pagelines"></i>
+        </div>
+        <span class="logo-name">Cara</span>
+      </div>
+
+      <div class="menu-items">
+        <ul class="nav-links">
+          <li>
+            <a href="Admin.html?home">
+              <i class="fa-solid fa-house"></i>
+              <span class="links-name">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="Admin.html?statistic">
+              <i class="fa-solid fa-chart-line"></i>
+              <span class="links-name">Statistic</span>
+            </a>
+          </li>
+          <li>
+            <a href="Admin.html?product">
+              <i class="fa-solid fa-shirt"></i>
+              <span class="links-name">Products</span>
+            </a>
+          </li>
+          <li>
+            <a href="Admin.html?customer">
+              <i class="fa-solid fa-users"></i>
+              <span class="links-name">Customers</span>
+            </a>
+          </li>
+          <li>
+            <a href="Admin.html?order">
+              <i class="fa-solid fa-receipt"></i>
+              <span class="links-name">Orders</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Dashboard content-->
+    <section class="dashboard">
+      <!-- Top menu -->
+      <div class="top">
+        <i class="fa-solid fa-list-ul" id="button"></i>
+        <div class="search-bar">
+          <input type="text" placeholder="What are you searching for ?" />
+          <a href="#">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </a>
+        </div>
+
+        <!-- Admin -->
+        <div class="dropdown">
+          <a href="#">
+            <img src="" alt="" />
+            <i class="fa-solid fa-caret-down"></i>
+          </a>
+          <div class="dropdown-content">
+            <div class="profile-details">
+              <div class="avt">
+                <img src="./assets/img/user/avt_admin.png" />
+              </div>
+
+              <div class="pf-text">
+                <span class="pf-name">Cara</span>
+                <span class="admin">Admin</span>
+                <span class="mail">Cara@gmail.com</span>
+              </div>
+            </div>
+            <!-- Sign Out -->
+            <div class="signout">
+              <a href="#">
+                <span>Sign Out</span>
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home -->
+      <div id="home" class="db-content">
+        <div class="overview-boxes">
+          <div class="title">
+            <i class="fa-regular fa-rectangle-list"></i>
+            <span class="text">Dashboard:</span>
+          </div>
+          <div class="boxes">
+            <div class="box">
+              <div class="box-content">
+                <div class="div-left">
+                  <div class="box-topic">Products</div>
+                  <div class="number">23</div>
+                </div>
+                <div class="indicator">
+                  <i class="fa-solid fa-box"></i>
+                </div>
+              </div>
+              <div class="details">
+                <span>More details</span>
+                <i class="fa-solid fa-circle-arrow-down"></i>
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-content">
+                <div class="div-left">
+                  <div class="box-topic">Total Orders</div>
+                  <div class="number">266</div>
+                </div>
+                <div class="indicator">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+              </div>
+              <div class="details">
+                <span>More details</span>
+                <i class="fa-solid fa-circle-arrow-down"></i>
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-content">
+                <div class="div-left">
+                  <div class="box-topic">Total Customers</div>
+                  <div class="number">123</div>
+                </div>
+                <div class="indicator">
+                  <i class="fa-solid fa-user-check"></i>
+                </div>
+              </div>
+              <div class="details">
+                <span>More details</span>
+                <i class="fa-solid fa-circle-arrow-down"></i>
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-content">
+                <div class="div-left">
+                  <div class="box-topic">Total Sales</div>
+                  <div class="number">$100.000</div>
+                </div>
+                <div class="indicator">
+                  <i class="fa-solid fa-money-bill"></i>
+                </div>
+              </div>
+              <div class="details">
+                <span>More details</span>
+                <i class="fa-solid fa-circle-arrow-down"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="title">
+            <i class="fa-regular fa-clock"></i>
+            <span class="text">Recent Orders:</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product -->
+      <div id="product" class="db-content" style="display: none">
+        <div class="title">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span class="text">Product Form:</span>
+        </div>
+
+        <!-- Product-form -->
+        <div id="form-scroll" class="add-form-parent">
+          <div class="add-form">
+            <h1 id="h1">Add Product</h1>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>ID:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="number"
+                  class="form-input"
+                  id="id"
+                  placeholder=" Enter product's ID"
+                />
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Name:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="text"
+                  id="name"
+                  class="form-input"
+                  placeholder=" Enter product's name"
+                />
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Brand:</label>
+              </div>
+              <div class="input">
+                <select
+                  id="brand"
+                  class="form-input"
+                  style="width: fit-content"
+                >
+                  <option>Adidas</option>
+                  <option>Gucci</option>
+                </select>
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Price:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="number"
+                  id="price"
+                  class="form-input"
+                  placeholder=" Enter product's price"
+                />
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Image:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="file"
+                  id="img"
+                  class="form-input"
+                  style="border: none"
+                />
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="button-section">
+              <button
+                type="submit"
+                id="btn-submit"
+                onclick="addProduct()"
+                class="btn-submit"
+              >
+                Add
+              </button>
+              <button
+                id="btn-update"
+                onclick="updateProduct()"
+                class="btn-update"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="title">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span class="text">Product List:</span>
+        </div>
+
+        <!-- Product List -->
+        <div class="board">
+          <table id="ProductList"></table>
+        </div>
+      </div>
+
+      <div id="customer" class="db-content" style="display: none">
+        <div class="title">
+          <i class="fa-solid fa-address-card"></i>
+          <span class="text">Customer List:</span>
+        </div>
+
+        <!-- User List -->
+        <div class="board">
+          <table id="UserList"></table>
+        </div>
+      </div>
+
+      <!-- Order List -->
+      <div id="order" class="db-content" style="display: none"></div>
+
+      <!-- Statistic section -->
+      <div id="statistic" class="db-content" style="display: none">
+        <div class="classification-product admin-sification">
+          <div class="all-product">All</div>
+          <div class="gucci-product">Gucci</div>
+          <div class="adidas-product">Adidas</div>
+        </div>
+        <div class="title-chart"><h1>business statistics of Cara-Shop</h1></div>
+        <div class="section-time">
+          <select name="" id="statistical-time">
+            <option selected value="all">All</option>
+            <option value="week">1 Week</option>
+            <option value="month">1 Month</option>
+            <option value="year">1 Year</option>
+          </select>
+        </div>
+        <div class="container-statistical">
+          <div class="gucci-statistical">
+            <table style="width: 100%">
+              <thead class="infor-inner"></thead>
+              <tbody class="statistics-admin"></tbody>
+            </table>
+          </div>
+          <div class="adidas-statistical"></div>
+        </div>
+        <div class="chart-admin">
+          <canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>
+        </div>
+      </div>
+    </section>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <script src="./assets/js/data.js"></script>
   <script src="./assets/js/admin.js"></script>
 </html>

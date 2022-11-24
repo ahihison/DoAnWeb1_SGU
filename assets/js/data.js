@@ -7,6 +7,7 @@ const product = [
     title: "Cartoon Astronaut T-Shirts",
     price: 78,
   },
+
   {
     id: 2,
     image:
@@ -574,7 +575,7 @@ const detailProduct = [
       "./assets/img/Build-and-Deploy-Ecommerce-Website-main/img/products/f4.jpg",
   },
   {
-    id: 23,
+    id: 22,
     title: "Adidas",
     header: "Main's Fashion T Shirt",
     price: 100.0,
@@ -591,7 +592,7 @@ const detailProduct = [
       "./assets/img/Build-and-Deploy-Ecommerce-Website-main/img/products/f1.jpg",
   },
   {
-    id: 24,
+    id: 23,
     title: "Gucci",
     header: "Main's Fashion T Shirt",
     price: 100.0,
@@ -608,7 +609,7 @@ const detailProduct = [
       "./assets/img/Build-and-Deploy-Ecommerce-Website-main/img/products/f5.jpg",
   },
   {
-    id: 25,
+    id: 24,
     title: "Adidas",
     header: "Main's Fashion T Shirt",
     price: 100.0,
@@ -625,7 +626,7 @@ const detailProduct = [
       "./assets/img/Build-and-Deploy-Ecommerce-Website-main/img/products/f4.jpg",
   },
 ];
-function setDetailLocalStorage() {
+function setDetailLocalStorage(detailProduct) {
   localStorage.setItem("detailProduct", JSON.stringify(detailProduct));
 }
 if (localStorage.getItem("detailProduct") == null) {
@@ -633,38 +634,114 @@ if (localStorage.getItem("detailProduct") == null) {
 }
 
 var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
+
 // xoa phan tu
 // for (var i = 0; i < products.length; i++) {
 //   if (products[i].id == 2) {
 //     products.splice(i, 1);
+
 //     setItemLocalStorage(products);
 //   }
 // }
 
+// for (var j = 0; j < detailProducts.length; j++) {
+//   if (detailProducts[j].id == 2) {
+//     detailProducts.splice(1, 1);
+//     setDetailLocalStorage(detailProducts);
+//   }
+// }
 var arrayInfo = [
   {
     id: 1,
     fullname: "nguyen hong son",
     email: "sonnguyen352003@gmail.com",
     password: "123456",
+    date: "03-05-2003",
   },
   {
     id: 2,
     fullname: "nguyen van tai",
     email: "taile123@gmail.com",
     password: "000000",
+    date: "15-9-2022",
   },
   {
     id: 3,
     fullname: "nguyen van A",
     email: "nguyenvana@gmail.com",
     password: "1234567",
+    date: "16-9-2022",
   },
   {
     id: 4,
     fullname: "nguyen van B",
     email: "nguyenvanB@gmail.com",
     password: "000000",
+    date: "16-9-2022",
+  },
+  {
+    id: 5,
+    fullname: "Vo Le Kim Tien",
+    email: "kimtien123@gmail.com",
+    password: "000000",
+    date: "15-9-2022",
+  },
+  {
+    id: 6,
+    fullname: "Nguyen Yen Vy",
+    email: "yenvyng266@gmail.com",
+    password: "260603",
+    date: "16-9-2022",
+  },
+  {
+    id: 7,
+    fullname: "Ha Nguyen Yen Vy",
+    email: "havi1@gmail.com",
+    password: "234111",
+    date: "16-9-2022",
+  },
+  {
+    id: 8,
+    fullname: "Do Ngoc Xuan Hoang",
+    email: "hoangdo2211@gmail.com",
+    password: "031122",
+    date: "26-9-2022",
+  },
+  {
+    id: 9,
+    fullname: "Vi Thi Hoa",
+    email: "vihoa2@gmail.com",
+    password: "246203",
+    date: "26-9-2022",
+  },
+
+  {
+    id: 10,
+    fullname: "Le Trinh Thien Huong",
+    email: "huongletrinh@gmail.com",
+    password: "123345",
+    date: "30-9-2022",
+  },
+  {
+    id: 11,
+    fullname: "Nguyen Thanh Sang",
+    email: "sangnguyen123@gmail.com",
+    password: "987654",
+    date: "7-10-2022",
+  },
+  {
+    id: 12,
+    fullname: "Nguyen Yen Vy",
+    email: "vynguyen000@gmail.com",
+    password: "001002",
+    date: "17-10-2022",
+  },
+  {
+    id: 13,
+    fullname: "Nguyen Hong Son",
+    email: "nhson123@gmail.com",
+    password: "123456",
+    date: "11-11-2022",
   },
 ];
 if (localStorage.getItem("infor") == null) {
@@ -675,7 +752,48 @@ function setAccountLocalStorage(arrayInfo) {
   localStorage.setItem("infor", JSON.stringify(arrayInfo));
 }
 var arrayInfos = JSON.parse(localStorage.getItem("infor"));
-var arrayHisOrder = [];
+var arrayHisOrder = [
+  {
+    cost: "78.00",
+    date: "11/10/2022",
+    details: "Main's T Shirt Adidas    x 2",
+    id: "1",
+    idPerson: 1,
+    shipping: "GiaoHangTietKiem",
+    size: "XL",
+    status: "da xu ly",
+  },
+  {
+    cost: "78.00",
+    date: "11/21/2022",
+    details: "Main's T Shirt Adidas    x 1",
+    id: "1",
+    idPerson: 1,
+    shipping: "GiaoHangTietKiem",
+    size: "XL",
+    status: "chua xu ly",
+  },
+  {
+    cost: "78.00",
+    date: "10/21/2022",
+    details: "Main's T Shirt Adidas    x 1",
+    id: "1",
+    idPerson: 1,
+    shipping: "GiaoHangTietKiem",
+    size: "XL",
+    status: "chua xu ly",
+  },
+  {
+    cost: "78.00",
+    date: "11/12/2022",
+    details: "Main's T Shirt Adidas    x 1",
+    id: "1",
+    idPerson: 1,
+    shipping: "GiaoHangTietKiem",
+    size: "XL",
+    status: "chua xu ly",
+  },
+];
 
 function setHistoryOrderLocalStorage(arrayHisOrder) {
   localStorage.setItem("hisOrder", JSON.stringify(arrayHisOrder));
