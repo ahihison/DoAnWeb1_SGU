@@ -17,6 +17,7 @@ var chart = document.querySelector(".chart-admin");
 var chartGucci = document.querySelector(".chart-Gucci");
 var chartAdidas = document.querySelector(".chart-Adidas");
 var options = document.querySelectorAll("select option");
+
 gucciClick.addEventListener("click", () => {
   gucciClick.classList.add("active");
   allClick.classList.add("color");
@@ -424,6 +425,7 @@ if (localStorage.getItem("product") == null) {
 //Hiển thị danh sách sản phẩm
 function showProductList(ProductArray) {
   if (localStorage.getItem("product") == null) return false;
+
   let table = `<thead>
         <tr>
             <th>ID</th>
@@ -445,6 +447,7 @@ function showProductList(ProductArray) {
                 <td> 
                 <a href="#form-scroll" style="text-decoration:none">
                     <button class = "btn-edit" onclick = "editProduct(${ProductArray[i].id})"><i class="fa-regular fa-pen-to-square"></i></button> </a>
+
                     <button class = "btn-delete" onclick = "deleteProduct(${ProductArray[i].id})"><i class="fa-solid fa-xmark"></i></button> 
                 </td>
             </tr>
@@ -467,6 +470,7 @@ function validate_form() {
         "";
   }
 }
+
 function changeImg() {
   document.querySelector("#img").addEventListener("change", function () {
     var reader = new FileReader();
@@ -480,7 +484,6 @@ changeImg();
 //Thêm sản phẩm
 function addProduct() {
   let ProductArray = JSON.parse(localStorage.getItem("product"));
-
   let formElement = document.querySelector(".add-form");
   let errorElement = formElement.querySelectorAll(".error-message");
   let arrError = [];
@@ -493,16 +496,19 @@ function addProduct() {
     let item_name = document.getElementById("name").value;
     let item_brand = document.getElementById("brand").value;
     let item_price = document.getElementById("price").value;
+
     let item_image = localStorage.getItem("recent-img");
 
     ProductArray.push({
       id: item_id,
       image: item_image,
+
       span: item_brand,
       title: item_name,
       price: item_price,
     });
   }
+
   createProduct(ProductArray);
   clear();
   showProductList(ProductArray);
@@ -520,6 +526,7 @@ function clear() {
 //Xóa sản phẩm
 function deleteProduct(deletePro) {
   let ProductArray = JSON.parse(localStorage.getItem("product"));
+
   for (let i = 0; i < ProductArray.length; i++) {
     if (ProductArray[i].id == deletePro)
       if (
@@ -539,6 +546,7 @@ var indexArr;
 function editProduct(index) {
   // cái index này là lấy được cái id của cái sản phẩm đó, id chứ ko phải ví trí của nó trong mảng
   let ProductArray = JSON.parse(localStorage.getItem("product"));
+
   document.getElementById("id").value = index;
   for (let i = 0; i < ProductArray.length; i++) {
     document.getElementById("h1").innerHTML = "Edit Product";
@@ -560,12 +568,14 @@ function editProduct(index) {
 changeImg();
 function updateProduct() {
   let ProductArray = JSON.parse(localStorage.getItem("product"));
+
   // gán giá trị trong mảng đó cho giá trị sửa
   ProductArray[indexArr] = {
     id: document.getElementById("id").value,
     title: document.getElementById("name").value,
     span: document.getElementById("brand").value,
     price: document.getElementById("price").value,
+
     image: localStorage.getItem("recent-img"),
   };
   createProduct(ProductArray);
@@ -625,6 +635,7 @@ window.onload = function () {
   redirect();
 
   let ProductArray = JSON.parse(localStorage.getItem("product"));
+
   var arrayInfos = JSON.parse(localStorage.getItem("infor"));
   showProductList(ProductArray);
   updateProduct();

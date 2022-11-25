@@ -596,7 +596,7 @@ function countProductAdidas() {
 function renderProduct(start, end) {
   html = "";
   var products = JSON.parse(localStorage.getItem("product"));
-  console.log("product ne", products);
+
   const content = products.map((item, index) => {
     if (index >= start && index < end) {
       html += `<div class="pro">`;
@@ -962,6 +962,7 @@ function innerDetail() {
               value = j;
             }
           }
+          console.log("value nè", value);
           getIndexProduct(value);
           changerSmallProduct();
           changePrice(i);

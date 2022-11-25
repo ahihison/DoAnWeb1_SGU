@@ -192,6 +192,14 @@ const product = [
     title: "Cartoon Astronaut T-Shirts",
     price: 78,
   },
+  {
+    id: 25,
+    image:
+      "./assets/img/Build-and-Deploy-Ecommerce-Website-main/img/products/f1.jpg",
+    span: "Adidas",
+    title: "Cartoon Astronaut T-Shirts",
+    price: 78,
+  },
 ];
 function setItemLocalStorage(product) {
   localStorage.setItem("product", JSON.stringify(product));
@@ -630,7 +638,7 @@ function setDetailLocalStorage(detailProduct) {
   localStorage.setItem("detailProduct", JSON.stringify(detailProduct));
 }
 if (localStorage.getItem("detailProduct") == null) {
-  setDetailLocalStorage();
+  setDetailLocalStorage(detailProduct);
 }
 
 var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
