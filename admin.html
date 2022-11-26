@@ -73,8 +73,10 @@
         <!-- Admin -->
         <div class="dropdown">
           <a href="#">
-            <img src="" alt="" />
-            <i class="fa-solid fa-caret-down"></i>
+            <div class="div-hover">
+              <img src="" alt="" />
+              <i class="fa-solid fa-caret-down"></i>
+            </div>
           </a>
           <div class="dropdown-content">
             <div class="profile-details">
@@ -92,7 +94,7 @@
             <div class="signout">
               <a href="#">
                 <span>Sign Out</span>
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <!-- <i class="fa-solid fa-arrow-right-from-bracket"></i> -->
               </a>
             </div>
           </div>
@@ -184,7 +186,6 @@
         </div>
 
         <!-- Product-form -->
-
         <div id="form-scroll" class="add-form-parent">
           <div class="add-form">
             <h1 id="h1">Add Product</h1>
@@ -214,6 +215,36 @@
                   id="name"
                   class="form-input"
                   placeholder=" Enter product's name"
+                />
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Detail:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="text"
+                  id="detail"
+                  class="form-input"
+                  placeholder=" Enter product's detail"
+                />
+                <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Header:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="text"
+                  id="header1"
+                  class="form-input"
+                  placeholder=" Enter product's detail"
                 />
                 <div class="error-message"></div>
               </div>
@@ -263,6 +294,51 @@
                   style="border: none"
                 />
                 <div class="error-message"></div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Image2:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="file"
+                  id="img2"
+                  class="form-input"
+                  style="border: none"
+                />
+                <!-- <div class="error-message"></div> -->
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Image3:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="file"
+                  id="img3"
+                  class="form-input"
+                  style="border: none"
+                />
+                <!-- <div class="error-message"></div> -->
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="input-title">
+                <label>Image4:</label>
+              </div>
+              <div class="input">
+                <input
+                  type="file"
+                  id="img4"
+                  class="form-input"
+                  style="border: none"
+                />
+                <!-- <div class="error-message"></div> -->
               </div>
             </div>
 

@@ -465,24 +465,62 @@ function validate_form() {
       inputElement[i].parentElement.querySelector(
         ".error-message"
       ).innerText = `Please enter Product's ${inputElement[i].id}`;
-    } else
-      inputElement[i].parentElement.querySelector(".error-message").innerText =
-        "";
+    }
+    // else
+    //   inputElement[i].parentElement.querySelector(".error-message").innerText =
+    //     "";
   }
 }
 
+var arrImg = [];
 function changeImg() {
   document.querySelector("#img").addEventListener("change", function () {
     var reader = new FileReader();
     reader.addEventListener("load", function listen() {
-      localStorage.setItem("recent-img", reader.result);
+      // localStorage.setItem("recent-img", reader.result);
+      if (arrImg.includes(reader.result) == false) {
+        arrImg.push(reader.result);
+      }
+    });
+    reader.readAsDataURL(this.files[0]);
+  });
+  document.querySelector("#img2").addEventListener("change", function () {
+    var reader = new FileReader();
+    reader.addEventListener("load", function listen() {
+      // localStorage.setItem("recent-img", reader.result);
+      if (arrImg.includes(reader.result) == false) {
+        arrImg.push(reader.result);
+      }
+    });
+    reader.readAsDataURL(this.files[0]);
+  });
+  document.querySelector("#img3").addEventListener("change", function () {
+    var reader = new FileReader();
+    reader.addEventListener("load", function listen() {
+      // localStorage.setItem("recent-img", reader.result);
+      if (arrImg.includes(reader.result) == false) {
+        arrImg.push(reader.result);
+      }
+    });
+    reader.readAsDataURL(this.files[0]);
+  });
+  document.querySelector("#img4").addEventListener("change", function () {
+    var reader = new FileReader();
+    reader.addEventListener("load", function listen() {
+      // localStorage.setItem("recent-img", reader.result);
+      if (arrImg.includes(reader.result) == false) {
+        arrImg.push(reader.result);
+      }
     });
     reader.readAsDataURL(this.files[0]);
   });
 }
 changeImg();
+
 //Thêm sản phẩm
 function addProduct() {
+  // localStorage.setItem("recent-img", reader.result);
+  console.log(arrImg);
   let ProductArray = JSON.parse(localStorage.getItem("product"));
   let formElement = document.querySelector(".add-form");
   let errorElement = formElement.querySelectorAll(".error-message");
@@ -496,13 +534,11 @@ function addProduct() {
     let item_name = document.getElementById("name").value;
     let item_brand = document.getElementById("brand").value;
     let item_price = document.getElementById("price").value;
-
-    let item_image = localStorage.getItem("recent-img");
+    let item_image = arrImg[0];
 
     ProductArray.push({
       id: item_id,
       image: item_image,
-
       span: item_brand,
       title: item_name,
       price: item_price,
@@ -510,17 +546,40 @@ function addProduct() {
   }
 
   createProduct(ProductArray);
-  clear();
   showProductList(ProductArray);
+  var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
+  let item_image = arrImg[0];
+  detailProducts.push({
+    detail: document.getElementById("detail").value,
+    header: document.getElementById("header1").value,
+    id: document.getElementById("id").value,
+    img: item_image,
+    imgsmall1: item_image,
+    imgsmall2: arrImg[1],
+    imgsmall3: arrImg[2],
+    imgsmall4: arrImg[3],
+    price: document.getElementById("price").value,
+    title: document.getElementById("brand").value,
+  });
+  setDetailLocalStorage(detailProducts);
+  clear();
 }
 
 //Xóa dữ liệu trên form sau khi submit
 function clear() {
   document.getElementById("id").value = "";
   document.getElementById("name").value = "";
+  document.getElementById("detail").value = "";
+  document.getElementById("header1").value = "";
   document.getElementById("brand").value = "";
   document.getElementById("price").value = "";
   document.getElementById("img").value = "";
+  document.getElementById("img2").value = "";
+  document.getElementById("img3").value = "";
+  document.getElementById("img4").value = "";
+  while (arrImg.length > 0) {
+    arrImg.pop();
+  }
 }
 
 //Xóa sản phẩm

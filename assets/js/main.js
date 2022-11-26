@@ -846,6 +846,7 @@ function getIndexProduct(index) {
 var containerDetail = $(".container-detail");
 
 function innerDetail() {
+  var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
   const currentProduct = $$("#product1 .pro");
   var value;
   var filterInput = $(".search-text");
