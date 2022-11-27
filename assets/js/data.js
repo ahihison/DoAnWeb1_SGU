@@ -192,14 +192,6 @@ const product = [
     title: "Cartoon Astronaut T-Shirts",
     price: 78,
   },
-  {
-    id: 25,
-    image:
-      "./assets/img/Build-and-Deploy-Ecommerce-Website-main/img/products/f1.jpg",
-    span: "Adidas",
-    title: "Cartoon Astronaut T-Shirts",
-    price: 78,
-  },
 ];
 function setItemLocalStorage(product) {
   localStorage.setItem("product", JSON.stringify(product));
@@ -660,11 +652,20 @@ var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
 // }
 var arrayInfo = [
   {
+    id: 14,
+    fullname: "Admin",
+    email: "admin@gmail.com",
+    password: "admin123",
+    date: "01-09-2022",
+    usertype: "Admin",
+  },
+  {
     id: 1,
     fullname: "nguyen hong son",
     email: "sonnguyen352003@gmail.com",
     password: "123456",
     date: "03-05-2003",
+    usertype: "User",
   },
   {
     id: 2,
@@ -672,6 +673,7 @@ var arrayInfo = [
     email: "taile123@gmail.com",
     password: "000000",
     date: "15-9-2022",
+    usertype: "User",
   },
   {
     id: 3,
@@ -679,6 +681,7 @@ var arrayInfo = [
     email: "nguyenvana@gmail.com",
     password: "1234567",
     date: "16-9-2022",
+    usertype: "User",
   },
   {
     id: 4,
@@ -686,6 +689,7 @@ var arrayInfo = [
     email: "nguyenvanB@gmail.com",
     password: "000000",
     date: "16-9-2022",
+    usertype: "User",
   },
   {
     id: 5,
@@ -693,6 +697,7 @@ var arrayInfo = [
     email: "kimtien123@gmail.com",
     password: "000000",
     date: "15-9-2022",
+    usertype: "User",
   },
   {
     id: 6,
@@ -700,6 +705,7 @@ var arrayInfo = [
     email: "yenvyng266@gmail.com",
     password: "260603",
     date: "16-9-2022",
+    usertype: "User",
   },
   {
     id: 7,
@@ -707,6 +713,7 @@ var arrayInfo = [
     email: "havi1@gmail.com",
     password: "234111",
     date: "16-9-2022",
+    usertype: "User",
   },
   {
     id: 8,
@@ -714,6 +721,7 @@ var arrayInfo = [
     email: "hoangdo2211@gmail.com",
     password: "031122",
     date: "26-9-2022",
+    usertype: "User",
   },
   {
     id: 9,
@@ -721,6 +729,7 @@ var arrayInfo = [
     email: "vihoa2@gmail.com",
     password: "246203",
     date: "26-9-2022",
+    usertype: "User",
   },
 
   {
@@ -729,6 +738,7 @@ var arrayInfo = [
     email: "huongletrinh@gmail.com",
     password: "123345",
     date: "30-9-2022",
+    usertype: "User",
   },
   {
     id: 11,
@@ -736,6 +746,7 @@ var arrayInfo = [
     email: "sangnguyen123@gmail.com",
     password: "987654",
     date: "7-10-2022",
+    usertype: "User",
   },
   {
     id: 12,
@@ -743,6 +754,7 @@ var arrayInfo = [
     email: "vynguyen000@gmail.com",
     password: "001002",
     date: "17-10-2022",
+    usertype: "User",
   },
   {
     id: 13,
@@ -750,6 +762,7 @@ var arrayInfo = [
     email: "nhson123@gmail.com",
     password: "123456",
     date: "11-11-2022",
+    usertype: "User",
   },
 ];
 if (localStorage.getItem("infor") == null) {
@@ -763,20 +776,20 @@ var arrayInfos = JSON.parse(localStorage.getItem("infor"));
 var arrayHisOrder = [
   {
     cost: "78.00",
-    date: "11/10/2022",
+    date: "10/10/2022",
     details: "Main's T Shirt Adidas    x 2",
-    id: "1",
-    idPerson: 1,
+    id: "2",
+    idPerson: 2,
     shipping: "GiaoHangTietKiem",
     size: "XL",
     status: "da xu ly",
   },
   {
     cost: "78.00",
-    date: "11/21/2022",
+    date: "1/21/2020",
     details: "Main's T Shirt Adidas    x 1",
-    id: "1",
-    idPerson: 1,
+    id: "3",
+    idPerson: 3,
     shipping: "GiaoHangTietKiem",
     size: "XL",
     status: "chua xu ly",
@@ -801,6 +814,26 @@ var arrayHisOrder = [
     size: "XL",
     status: "chua xu ly",
   },
+  {
+    cost: "120.00",
+    date: "8/12/2021",
+    details: "Main's T Shirt Gucci    x 1",
+    id: "2",
+    idPerson: 2,
+    shipping: "GiaoHangTietKiem",
+    size: "XL",
+    status: "chua xu ly",
+  },
+  {
+    cost: "120.00",
+    date: "8/12/2021",
+    details: "Main's T Shirt Gucci    x 1",
+    id: "2",
+    idPerson: 2,
+    shipping: "GiaoHangTietKiem",
+    size: "XL",
+    status: "chua xu ly",
+  },
 ];
 
 function setHistoryOrderLocalStorage(arrayHisOrder) {
@@ -809,7 +842,8 @@ function setHistoryOrderLocalStorage(arrayHisOrder) {
 if (localStorage.getItem("hisOrder") == null) {
   setHistoryOrderLocalStorage(arrayHisOrder);
 }
-// var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+
+var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
 // for (let i = 0; i < arrayHis.length; i++) {
 //   if (i == 1) {
 //     arrayHis[i].status = "da xu ly";

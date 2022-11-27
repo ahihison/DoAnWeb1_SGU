@@ -17,18 +17,27 @@ var chart = document.querySelector(".chart-admin");
 var chartGucci = document.querySelector(".chart-Gucci");
 var chartAdidas = document.querySelector(".chart-Adidas");
 var options = document.querySelectorAll("select option");
-
+var totalHis;
+var totalGucci;
 gucciClick.addEventListener("click", () => {
+  countAdidas = 0;
+  countGucci = 0;
+  totalMoneyAdidas = 0;
+  totalMoneyGucci = 0;
+  totalMoney = 0;
+  sumAll = 0;
   gucciClick.classList.add("active");
   allClick.classList.add("color");
   adidasClick.classList.remove("active");
-
+  countGucci = 0;
   for (var i = 0; i < options.length; i++) {
     options[i].selected = options[i].defaultSelected;
   }
   chart.innerHTML = `<canvas id="myChartGucci" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
   check = "gucci";
-  innerStatisticsGucci(sumAll, countGucci, totalMoneyGucci);
+  handleChartTime("all", arrayHis);
+  innerStatisticsGucci(countGucci, countGucci, totalMoneyGucci);
+  totalGucci = countGucci;
   drawChartGucci();
   if (check == "gucci") {
     timeOption.addEventListener("change", () => {
@@ -40,25 +49,26 @@ gucciClick.addEventListener("click", () => {
       sumAll = 0;
       chart.innerHTML = `<canvas id="myChartGucci" style="width: 100%; max-width: 600px"></canvas>`;
       if (timeOption.value == "week" && check == "gucci") {
-        handleChartTime(timeOption.value);
-        innerStatisticsGucci(sumAll, countGucci, totalMoneyGucci);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
         drawChartGucci();
       } else if (timeOption.value == "month" && check == "gucci") {
-        handleChartTime(timeOption.value);
-        innerStatisticsGucci(sumAll, countGucci, totalMoneyGucci);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
         drawChartGucci();
       } else if (timeOption.value == "year" && check == "gucci") {
-        handleChartTime(timeOption.value);
-        innerStatisticsGucci(sumAll, countGucci, totalMoneyGucci);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
         drawChartGucci();
       } else if (timeOption.value == "all" && check == "gucci") {
-        handleChartTime(timeOption.value);
-        innerStatisticsGucci(sumAll, countGucci, totalMoneyGucci);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
         drawChartGucci();
       }
     });
   }
 });
+var totalAdidas;
 adidasClick.addEventListener("click", () => {
   adidasClick.classList.add("active");
   allClick.classList.add("color");
@@ -69,38 +79,34 @@ adidasClick.addEventListener("click", () => {
   }
   check = "adidas";
   chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px"></canvas>`;
+  handleChartTime("all", arrayHis);
 
-  innerStatisticsAdidas(sumAll, countAdidas, totalMoneyAdidas);
+  innerStatisticsAdidas(countAdidas, countAdidas, totalMoneyAdidas);
+  totalAdidas = countAdidas;
   drawChartAdidas();
   if (check == "adidas") {
     timeOption.addEventListener("change", () => {
-      countAdidas = 0;
-      countGucci = 0;
-      totalMoneyAdidas = 0;
-      totalMoneyGucci = 0;
-      totalMoney = 0;
-      sumAll = 0;
       chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px"></canvas>`;
 
       if (timeOption.value == "week" && check == "adidas") {
-        handleChartTime(timeOption.value);
-        innerStatisticsAdidas(sumAll, countAdidas, totalMoneyAdidas);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
         drawChartAdidas();
       } else if (timeOption.value == "month" && check == "adidas") {
-        handleChartTime(timeOption.value);
-        innerStatisticsAdidas(sumAll, countAdidas, totalMoneyAdidas);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
         drawChartAdidas();
       } else if (timeOption.value == "year" && check == "adidas") {
-        handleChartTime(timeOption.value);
-        innerStatisticsAdidas(sumAll, countAdidas, totalMoneyAdidas);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
         drawChartAdidas();
       } else if (timeOption.value == "year" && check == "adidas") {
-        handleChartTime(timeOption.value);
-        innerStatisticsAdidas(sumAll, countAdidas, totalMoneyAdidas);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
         drawChartAdidas();
       } else if (timeOption.value == "all" && check == "adidas") {
-        handleChartTime(timeOption.value);
-        innerStatisticsAdidas(sumAll, countAdidas, totalMoneyAdidas);
+        handleChartTime(timeOption.value, arrayHis);
+        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
         drawChartAdidas();
       }
     });
@@ -116,6 +122,7 @@ allClick.addEventListener("click", () => {
   }
   check = "all";
   chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
+  handleChartTime("all", arrayHis);
   innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
   drawChart();
   if (check == "all") {
@@ -128,19 +135,19 @@ allClick.addEventListener("click", () => {
       sumAll = 0;
       chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
       if (timeOption.value == "week" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       } else if (timeOption.value == "month" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       } else if (timeOption.value == "year" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       } else if (timeOption.value == "all" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       }
@@ -149,29 +156,30 @@ allClick.addEventListener("click", () => {
 });
 getTime();
 
-function handleChartTime(time) {
+function handleChartTime(time, arrayHis) {
+  countAdidas = 0;
+  countGucci = 0;
+  totalMoneyAdidas = 0;
+  totalMoneyGucci = 0;
+  totalMoney = 0;
+  sumAll = 0;
   for (let i = 0; i < arrayHis.length; i++) {
     var day = arrayHis[i].date.slice(3, 5);
     var month = arrayHis[i].date.slice(0, 2);
     var year = arrayHis[i].date.slice(-4);
     if (arrayHis[i].details.includes("Adidas")) {
       if (Number(dayNow) - Number(day) <= 7 && time == "week") {
-        console.log(arrayHis[i]);
-
         countAdidas += Number(arrayHis[i].details.slice(-1));
         totalMoneyAdidas +=
           Number(arrayHis[i].details.slice(-1)) * Number(arrayHis[i].cost);
       } else if (Number(monthNow) - Number(month) <= 1 && time == "month") {
-        console.log(arrayHis[i]);
         countAdidas += Number(arrayHis[i].details.slice(-1));
         totalMoneyAdidas +=
           Number(arrayHis[i].details.slice(-1)) * Number(arrayHis[i].cost);
       } else if (Number(yearNow) - Number(year) <= 1 && time == "year") {
-        console.log(arrayHis[i]);
         countAdidas += Number(arrayHis[i].details.slice(-1));
         totalMoneyAdidas +=
           Number(arrayHis[i].details.slice(-1)) * Number(arrayHis[i].cost);
-        console.log("count adidas:", countAdidas);
       } else if (time == "all") {
         countAdidas += Number(arrayHis[i].details.slice(-1));
         totalMoneyAdidas +=
@@ -197,12 +205,20 @@ function handleChartTime(time) {
           Number(arrayHis[i].details.slice(-1)) * Number(arrayHis[i].cost);
       }
     }
+    console.log("sumall ne", sumAll);
     sumAll = countAdidas + countGucci;
     totalMoney = totalMoneyAdidas + totalMoneyGucci;
+    if (time == "all") {
+      totalHis = sumAll;
+    }
   }
 }
 function getTime() {
-  handleChartTime("all");
+  sumAll = 0;
+  handleChartTime("all", arrayHis);
+  for (var i = 0; i < options.length; i++) {
+    options[i].selected = options[i].defaultSelected;
+  }
   check = "all";
   chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
   innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
@@ -217,19 +233,19 @@ function getTime() {
       sumAll = 0;
       chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
       if (timeOption.value == "week" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       } else if (timeOption.value == "month" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       } else if (timeOption.value == "year" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       } else if (timeOption.value == "all" && check == "all") {
-        handleChartTime(timeOption.value);
+        handleChartTime(timeOption.value, arrayHis);
         innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
         drawChart();
       }
@@ -292,7 +308,7 @@ function innerStatisticsGucci(total, gucci, cost) {
 
 function drawChartAdidas() {
   var xValues = ["All", "Adidas", ""];
-  var yValues = [sumAll, countAdidas, 0];
+  var yValues = [totalAdidas, countAdidas, 0];
   var barColors = ["red", "green"];
 
   new Chart("myChartAdidas", {
@@ -325,7 +341,7 @@ function drawChartAdidas() {
 
 function drawChartGucci() {
   var xValues = ["All", "Gucci", ""];
-  var yValues = [sumAll, countGucci, 0];
+  var yValues = [totalGucci, countGucci, 0];
   var barColors = ["pink", "yellow"];
   new Chart("myChartGucci", {
     type: "bar",
@@ -460,11 +476,12 @@ function showProductList(ProductArray) {
 function validate_form() {
   let formElement = document.querySelector(".add-form");
   let inputElement = formElement.querySelectorAll(".form-input");
+
   for (let i = 0; i < inputElement.length; i++) {
     if (inputElement[i].value == "") {
       inputElement[i].parentElement.querySelector(
         ".error-message"
-      ).innerText = `Please enter Product's ${inputElement[i].id}`;
+      ).innerHTML = `Please enter Product's ${inputElement[i].id}`;
     }
     // else
     //   inputElement[i].parentElement.querySelector(".error-message").innerText =
@@ -520,7 +537,7 @@ changeImg();
 //Thêm sản phẩm
 function addProduct() {
   // localStorage.setItem("recent-img", reader.result);
-  console.log(arrImg);
+  validate_form();
   let ProductArray = JSON.parse(localStorage.getItem("product"));
   let formElement = document.querySelector(".add-form");
   let errorElement = formElement.querySelectorAll(".error-message");
@@ -528,6 +545,7 @@ function addProduct() {
   for (let i = 0; i < errorElement.length; i++) {
     arrError.push(errorElement[i].innerText);
   }
+
   let checkError = arrError.every((value) => value == "");
   if (checkError) {
     let item_id = document.getElementById("id").value;
@@ -605,7 +623,7 @@ var indexArr;
 function editProduct(index) {
   // cái index này là lấy được cái id của cái sản phẩm đó, id chứ ko phải ví trí của nó trong mảng
   let ProductArray = JSON.parse(localStorage.getItem("product"));
-
+  var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
   document.getElementById("id").value = index;
   for (let i = 0; i < ProductArray.length; i++) {
     document.getElementById("h1").innerHTML = "Edit Product";
@@ -620,25 +638,43 @@ function editProduct(index) {
       document.getElementById("name").value = ProductArray[i].title;
       document.getElementById("brand").value = ProductArray[i].span;
       document.getElementById("price").value = ProductArray[i].price;
+      document.getElementById("detail").value = detailProducts[i].detail;
+      document.getElementById("header1").value = detailProducts[i].header;
     }
   }
+  validate_form();
 }
 
 changeImg();
 function updateProduct() {
   let ProductArray = JSON.parse(localStorage.getItem("product"));
-
+  changeImg();
+  var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
   // gán giá trị trong mảng đó cho giá trị sửa
   ProductArray[indexArr] = {
     id: document.getElementById("id").value,
     title: document.getElementById("name").value,
     span: document.getElementById("brand").value,
     price: document.getElementById("price").value,
-
-    image: localStorage.getItem("recent-img"),
+    image: arrImg[0],
   };
+  detailProducts[indexArr] = {
+    detail: document.getElementById("detail").value,
+    title: document.getElementById("name").value,
+    header: document.getElementById("brand").value,
+    price: document.getElementById("price").value,
+    img: arrImg[0],
+    imgsmall1: arrImg[0],
+    imgsmall2: arrImg[1],
+    imgsmall3: arrImg[2],
+    imgsmall4: arrImg[3],
+    id: document.getElementById("id").value,
+  };
+
   createProduct(ProductArray);
+  setDetailLocalStorage(detailProducts);
   showProductList(ProductArray);
+
   clear();
   document.getElementById("h1").innerHTML = "Add Product";
   document.getElementById("btn-submit").style.display = "inline";
@@ -653,6 +689,7 @@ function showUserList(arrayInfos) {
           <th>Name</th>
           <th>Email</th>
           <th>Registered</th>
+          <th>Role</th>
           <th>Actions</th>
       </tr>
     </thead>`;
@@ -664,15 +701,50 @@ function showUserList(arrayInfos) {
               <td>${arrayInfos[i].fullname}</td>
               <td>${arrayInfos[i].email}</td>
               <td>${arrayInfos[i].date}</td>
-              <td> 
-                  <button class = "btn-deactivate" onclick = "deleteUser(${index})"><i class="fa-solid fa-user-slash"></i></button> 
+              <td style = "color: grey">${arrayInfos[i].usertype}</td>
+              <td>
+                  <button 
+                    class = "btn-editRole" 
+                    onclick = "editUser(${index})">
+                    <i class="fa-solid fa-plus-minus"></i>
+                  </button>
+                  <button 
+                    class = "btn-deactivate" 
+                    onclick = "deleteUser(${index})">
+                    <i class="fa-solid fa-user-slash"></i>
+                  </button>
               </td>
           </tr>
       </tbody>`;
   }
   document.getElementById("UserList").innerHTML = table;
 }
-
+function editUser(index) {
+  var role;
+  var arrayInfos = JSON.parse(localStorage.getItem("infor"));
+  for (let i = 0; i < arrayInfos.length; i++) {
+    role = arrayInfos[index].usertype;
+    if (role == "User") {
+      if (
+        confirm(
+          "Are you sure you want to give this user the Administrative Privileges?"
+        )
+      )
+        arrayInfos[index].usertype = "Admin";
+      break;
+    } else {
+      if (
+        confirm(
+          "Are you sure you want to cancel this user's Administrative Privileges?"
+        )
+      )
+        arrayInfos[index].usertype = "User";
+      break;
+    }
+  }
+  setAccountLocalStorage(arrayInfos);
+  showUserList(arrayInfos);
+}
 function deleteUser(deleteUser) {
   var arrayInfos = JSON.parse(localStorage.getItem("infor"));
   for (let i = 0; i < arrayInfos.length; i++) {
@@ -701,3 +773,277 @@ window.onload = function () {
   showUserList(arrayInfos);
   deleteUser();
 };
+
+// customer order
+
+function showCustomerOrder(arrayHisOrder) {
+  var arrayInfos = JSON.parse(localStorage.getItem("infor"));
+  let table = `
+  <thead>
+  <tr  >
+  <th style="width: 10%">ID</th>
+  <th style="width: 30%">Email</th>
+  <th style="width: 30%">Date</th>
+  <th style="width: 30%">Status</th>
+</tr>
+</thead>`;
+  for (let i = 0; i < arrayHisOrder.length; i++) {
+    let index;
+    for (var j = 0; j < arrayInfos.length; j++) {
+      if (arrayHisOrder[i].idPerson == arrayInfos[j].id) {
+        index = j;
+      }
+    }
+    table += `<tbody>
+          <tr class ="row-cusorder">
+              <td class = "cus-id">${i + 1}</td>
+              <td class="cus-email">${arrayInfos[index].email}</td>
+              <td>${arrayHisOrder[i].date}</td>
+              <td>${arrayHisOrder[i].status}</td>
+          </tr>
+      </tbody>
+    `;
+  }
+  document.querySelector(".table-order").innerHTML = table;
+}
+
+var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+var getIndexOr;
+showCustomerOrder(arrayHis);
+var dasboard = document.querySelector(".dashboard");
+var container = document.querySelector(".container");
+var overlay = document.querySelector(".container-detailorder");
+function showDetailOrder() {
+  var arrayInfos = JSON.parse(localStorage.getItem("infor"));
+  var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+  var rowCusOrder = document.querySelectorAll(".table-order .row-cusorder");
+  var styleVar;
+  var cusId = document.querySelectorAll(".cus-id");
+  for (let i = 0; i < rowCusOrder.length; i++) {
+    rowCusOrder[i].addEventListener("click", () => {
+      var indexOrder = cusId[i].innerText;
+      getIndexOr = cusId[i].innerText;
+      var indexPer = arrayHis[indexOrder - 1].idPerson - 1;
+      if (arrayHis[indexOrder - 1].status == "da xu ly") {
+        styleVar = "none";
+      } else styleVar = "block";
+
+      detailOrder(
+        arrayHis,
+        indexOrder - 1,
+        arrayInfos,
+        indexPer,
+        styleVar,
+        "changeStatusOrder()"
+      );
+
+      var container = document.querySelector(".container");
+      var overlay = document.querySelector(".container-detailorder");
+
+      container.classList.add("acitve");
+      overlay.classList.add("active");
+    });
+  }
+}
+showDetailOrder();
+var indexPer;
+var getIndexOr;
+function showDetailOrderTime(indexTime, arrOrder) {
+  var arrayInfos = JSON.parse(localStorage.getItem("infor"));
+  var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+  var rowCusOrder = document.querySelectorAll(".table-order .row-cusorder");
+  var styleVar;
+
+  var cusId = document.querySelectorAll(".cus-id");
+  for (let i = 0; i < rowCusOrder.length; i++) {
+    rowCusOrder[i].addEventListener("click", () => {
+      getIndexOr = indexTime[cusId[i].innerText - 1];
+
+      indexPer = arrayHis[indexTime[cusId[i].innerText - 1]].idPerson - 1;
+
+      if (arrayHis[indexTime[cusId[i].innerText - 1]].status == "da xu ly") {
+        styleVar = "none";
+      } else styleVar = "block";
+      detailOrder(
+        arrayHis,
+        indexTime[cusId[i].innerText - 1],
+        arrayInfos,
+        indexPer,
+        styleVar,
+        "changeStatusTime()"
+      );
+
+      var container = document.querySelector(".container");
+      var overlay = document.querySelector(".container-detailorder");
+
+      container.classList.add("acitve");
+      overlay.classList.add("active");
+    });
+  }
+}
+
+function detailOrder(arrayHis, index, arrayInfos, indexPer, style, func) {
+  html = `
+  <div class="detail-ordercus">
+  <div class="close-orderdetail">
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+              <h2 class="title-detailcus">Details Order</h2>
+              <div class="date-order">Date: <span>${arrayHis[index].date}</span></div>
+              <div class="details-order">
+                Details: <span>${arrayHis[index].details} </span>
+              </div>
+              <div class="name-cusorder">
+                Customer Name:
+                <span> ${arrayInfos[indexPer].fullname} </span>
+              </div>
+              <div class="shipping-order">
+                Shipping: 
+                <span> Giaohangtietkiem </span>
+              </div>
+              <div class="size-order">
+                Size:
+                <span>${arrayHis[index].size} </span>
+              </div>
+              <div class="status-order">
+                Status: <span class="status-text"> ${arrayHis[index].status} </span><input type="checkbox" id="myCheck" onclick="${func}" style ="display:${style}" />
+              </div>
+            </div>`;
+  document.querySelector(".container-detailorder").innerHTML = html;
+  var formOrderDetail = document.querySelector(".detail-ordercus");
+  var closeDetailOrder = document.querySelector(
+    ".detail-ordercus .close-orderdetail"
+  );
+  var overlay = document.querySelector(".container-detailorder");
+  closeDetailOrder.addEventListener("click", () => {
+    formOrderDetail.classList.add("remove");
+    console.log(overlay);
+    overlay.classList.remove("active");
+  });
+}
+var messageCheck;
+function changeStatusTime() {
+  var checkbox = document.querySelector("#myCheck");
+  var statusText = document.querySelector(".status-text");
+  if (checkbox.checked == true) {
+    if (statusText.innerText == "da xu ly") {
+      statusText.innerHTML = "chua xu ly";
+    } else {
+      statusText.innerHTML = "da xu ly";
+    }
+  }
+  var hidenCheckbox = document.querySelector(".status-order .status-text");
+  messageCheck = hidenCheckbox.innerText;
+  if (hidenCheckbox.innerText == "da xu ly") {
+    var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+    checkbox.style.display = "none";
+    arrayHis[getIndexOr].status = "da xu ly";
+    setHistoryOrderLocalStorage(arrayHis);
+    var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+
+    orderCustomerTime(timeOrder.value);
+    // orderCustomerTime("month");
+    // orderCustomerTime("week");
+    // showDetailOrderTime(indexTime, arrOrder);
+  }
+}
+function changeStatusOrder() {
+  var checkbox = document.querySelector("#myCheck");
+  var statusText = document.querySelector(".status-text");
+  if (checkbox.checked == true) {
+    if (statusText.innerText == "da xu ly") {
+      statusText.innerHTML = "chua xu ly";
+    } else {
+      statusText.innerHTML = "da xu ly";
+    }
+  }
+  var hidenCheckbox = document.querySelector(".status-order .status-text");
+  messageCheck = hidenCheckbox.innerText;
+  if (hidenCheckbox.innerText == "da xu ly") {
+    var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+    checkbox.style.display = "none";
+
+    arrayHis[getIndexOr - 1].status = "da xu ly";
+    setHistoryOrderLocalStorage(arrayHis);
+    var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+    showCustomerOrder(arrayHis);
+    showDetailOrder();
+
+    // orderCustomerTime("week");
+    // showDetailOrderTime(indexTime, arrOrder);
+  }
+}
+
+var arrOrder = [];
+var indexTime = [];
+function orderCustomerTime(time) {
+  indexTime = [];
+  var temp = [];
+  var dayOrder = [];
+  var monthOrder = [];
+  var yearOrder = [];
+  var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+  for (var k = 0; k < arrayHis.length; k++) {
+    temp = arrayHis[k].date.split("/");
+    dayOrder.push(temp[1]);
+    monthOrder.push(temp[0]);
+    yearOrder.push(temp[2]);
+  }
+
+  for (var i = 0; i < arrayHis.length; i++) {
+    if (Number(dayNow) - Number(dayOrder[i]) <= 7 && time == "week") {
+      arrOrder.push(arrayHis[i]);
+    } else if (
+      Number(monthNow) - Number(monthOrder[i]) <= 1 &&
+      time == "month"
+    ) {
+      arrOrder.push(arrayHis[i]);
+    } else if (Number(monthNow) - Number(yearOrder[i]) <= 1 && time == "year") {
+      arrOrder.push(arrayHis[i]);
+    }
+    if (time == "all") {
+      arrOrder.push(arrayHis[i]);
+    }
+  }
+
+  for (var j = 0; j < arrOrder.length; j++) {
+    indexTime.push(arrayHis.indexOf(arrOrder[j]));
+  }
+  showCustomerOrder(arrOrder);
+  showDetailOrderTime(indexTime, arrOrder);
+
+  while (arrOrder.length > 0) {
+    arrOrder.pop();
+  }
+}
+
+var timeOrder = document.querySelector("#ordercus-time");
+function getValueTime() {
+  timeOrder.addEventListener("change", () => {
+    if (timeOrder.value == "week") {
+      orderCustomerTime(timeOrder.value);
+      while (arrOrder.length > 0) {
+        arrOrder.pop();
+      }
+    } else if (timeOrder.value == "month") {
+      orderCustomerTime(timeOrder.value);
+
+      while (arrOrder.length > 0) {
+        arrOrder.pop();
+      }
+    } else if (timeOrder.value == "year") {
+      orderCustomerTime(timeOrder.value);
+
+      while (arrOrder.length > 0) {
+        arrOrder.pop();
+      }
+    } else {
+      orderCustomerTime(timeOrder.value);
+
+      while (arrOrder.length > 0) {
+        arrOrder.pop();
+      }
+    }
+  });
+}
+getValueTime();

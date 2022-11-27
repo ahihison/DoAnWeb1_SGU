@@ -195,57 +195,61 @@ function Validator(options) {
           options.onSubmit(arrayInfo);
 
           if (options.form === "#form-2") {
-            if (
-              formValues.email == "admin@gmail.com" &&
-              formValues.password == "admin123"
-            ) {
-              location.href = "admin.html";
-            } else {
-              var flag = true;
-              var arrayInfos = JSON.parse(localStorage.getItem("infor"));
-              arrayInfos.forEach((e) => {
-                if (
-                  e.email === `${formValues.email}` &&
-                  e.password === `${formValues.password}`
-                ) {
-                  validation2.classList.remove("active");
-                  $(".message-text").innerHTML = "Login Successfully! ";
-                  toastSuccess.classList.add("active");
-                  signInOut.classList.add("active");
-                  userAvatar.classList.add("active");
-                  avatarMoblie.classList.add("active");
-                  myOrderMobile.classList.add("active");
-                  logoutMobile.classList.add("active");
-                  flag = false;
-                  checkSinginBuyPro = true;
+            var arrayInfos = JSON.parse(localStorage.getItem("infor"));
+            for (var i = 0; i < arrayInfos.length; i++) {
+              if (
+                arrayInfos[i].email == formValues.email &&
+                arrayInfos[i].password == formValues.password &&
+                arrayInfos[i].usertype == "Admin"
+              ) {
+                location.href = "admin.html";
+              } else {
+                var flag = true;
+                var arrayInfos = JSON.parse(localStorage.getItem("infor"));
+                arrayInfos.forEach((e) => {
+                  if (
+                    e.email === `${formValues.email}` &&
+                    e.password === `${formValues.password}`
+                  ) {
+                    validation2.classList.remove("active");
+                    $(".message-text").innerHTML = "Login Successfully! ";
+                    toastSuccess.classList.add("active");
+                    signInOut.classList.add("active");
+                    userAvatar.classList.add("active");
+                    avatarMoblie.classList.add("active");
+                    myOrderMobile.classList.add("active");
+                    logoutMobile.classList.add("active");
+                    flag = false;
+                    checkSinginBuyPro = true;
 
-                  idPerson = e.id;
+                    idPerson = e.id;
 
-                  var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
+                    var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
 
-                  for (var i = 0; i < arrayHis.length; i++) {
-                    if (arrayHis[i].idPerson == e.id) {
-                      hisOrderUser(
-                        arrayHis[i].id,
-                        arrayHis[i].size,
-                        arrayHis[i].details,
-                        arrayHis[i].date,
-                        arrayHis[i].cost,
-                        arrayHis[i].status
-                      );
+                    for (var i = 0; i < arrayHis.length; i++) {
+                      if (arrayHis[i].idPerson == e.id) {
+                        hisOrderUser(
+                          arrayHis[i].id,
+                          arrayHis[i].size,
+                          arrayHis[i].details,
+                          arrayHis[i].date,
+                          arrayHis[i].cost,
+                          arrayHis[i].status
+                        );
+                      }
                     }
+                    var moneyBill = $$(".money-bill-item");
+                    sum = 0;
+                    var toltalAllMoney = $(".total-all-money");
+                    for (i = 0; i < moneyBill.length; i++) {
+                      sum = Number(sum) + Number(moneyBill[i].innerText);
+                    }
+                    toltalAllMoney.innerHTML = `$` + sum + `.00`;
                   }
-                  var moneyBill = $$(".money-bill-item");
-                  sum = 0;
-                  var toltalAllMoney = $(".total-all-money");
-                  for (i = 0; i < moneyBill.length; i++) {
-                    sum = Number(sum) + Number(moneyBill[i].innerText);
-                  }
-                  toltalAllMoney.innerHTML = `$` + sum + `.00`;
+                });
+                if (flag == true) {
+                  toastFail.classList.add("active");
                 }
-              });
-              if (flag == true) {
-                toastFail.classList.add("active");
               }
             }
           }
@@ -848,11 +852,13 @@ var containerDetail = $(".container-detail");
 function innerDetail() {
   var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
   const currentProduct = $$("#product1 .pro");
+
   var value;
   var filterInput = $(".search-text");
   var filterValue = filterInput.value.toUpperCase();
   for (let i = 0; i < currentProduct.length; i++) {
     currentProduct[i].addEventListener("click", () => {
+      console.log(currentProduct[i]);
       if (filterValue != "") {
         if (currentPages < 2) {
           for (var j = 0; j < detailProducts.length; j++) {
@@ -1504,9 +1510,11 @@ function addItemToCart(title, brandShop, price, imgSrc, size) {
   cartRow.classList.add("cart-row");
   var cartItems = $$(".cart-items")[0];
   var carItemNames = $$(".cart-item-title");
-
+  console.log(title + " " + brandShop);
   for (var i = 0; i < carItemNames.length; i++) {
-    if (carItemNames[i].innerText == title) {
+    console.log("inner ", carItemNames[i].innerText == title + " " + brandShop);
+    console.log("title: ", title + " " + brandShop);
+    if (carItemNames[i].innerText == title + " " + brandShop) {
       alert("This item is already added to the cart");
       return;
     }
@@ -1516,8 +1524,7 @@ function addItemToCart(title, brandShop, price, imgSrc, size) {
   <a class="btn-close-shopcart" href="#"><i class="far fa-times-circle "></a></i>
   </td>
   <td><img src="${imgSrc}" alt=""></td>
-  <td class="cart-item-title">${title} 
-  ${brandShop}</td>
+  <td class="cart-item-title">${title} ${brandShop}</td>
   <td class="cart-price">${price}</td>
   <td ><input class="cart-quality" type="number" value="1" min="1">
   </td>
