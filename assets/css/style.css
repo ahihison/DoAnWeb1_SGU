@@ -140,6 +140,7 @@ body {
 #hero h1 {
   color: #088178;
 }
+
 #hero button {
   background-image: url("../img/Build-and-Deploy-Ecommerce-Website-main/img/button.png");
   background-color: transparent;
@@ -151,6 +152,7 @@ body {
   font-weight: 700;
   font-size: 15px;
 }
+
 #feature {
   display: flex;
   align-items: center;
@@ -181,12 +183,14 @@ body {
 .signin-singout {
   position: relative;
   display: block;
-
+  margin: 0 0 0 -520px;
   /* display: none; */
 }
+
 .signin-singout.active {
   display: none;
 }
+
 .menu-login-logout {
   width: 150px;
   height: 90px;
@@ -1172,11 +1176,15 @@ footer .copyright {
   display: flex;
   z-index: 99;
 }
-.bill-order tr:nth-child(2n + 1) {
+
+/* .bill-order tr:nth-child(2n + 1) {
   background-color: #dde2e6;
-}
-.bill-order tr:nth-child(2n):hover {
+} */
+/* .bill-order tr:nth-child(2n):hover {
   background-color: #dde2e6;
+} */
+.bill-order tr:hover {
+  opacity: 0.6;
 }
 .container-order {
   width: 100%;
@@ -1188,9 +1196,11 @@ footer .copyright {
 .container-order thead tr {
   font-size: 16px;
   font-weight: 600;
+  background-color: rgb(28, 177, 125);
+  height: 50px;
 }
 .cart-row-bill td {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
 }
 .cart-row-bill td:last-child {
@@ -1665,4 +1675,16 @@ th {
 .chart-Adidas.reomve,
 .chart-admin.remove {
   display: none;
+}
+
+/* Slide show */
+/* Slideshow container */
+.slideshow-container {
+  width: 1368px;
+  margin: auto;
+}
+
+.slideshow-container .mySlides img {
+  width: 100%;
+  height: 600px;
 }

@@ -13,6 +13,9 @@
   .signin-singout {
     margin-right: 40px;
   }
+  .signin-singout-mobile {
+    display: flex;
+  }
   .container .form-1 {
     right: 4px;
     top: 14px;

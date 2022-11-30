@@ -635,21 +635,6 @@ if (localStorage.getItem("detailProduct") == null) {
 
 var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
 
-// xoa phan tu
-// for (var i = 0; i < products.length; i++) {
-//   if (products[i].id == 2) {
-//     products.splice(i, 1);
-
-//     setItemLocalStorage(products);
-//   }
-// }
-
-// for (var j = 0; j < detailProducts.length; j++) {
-//   if (detailProducts[j].id == 2) {
-//     detailProducts.splice(1, 1);
-//     setDetailLocalStorage(detailProducts);
-//   }
-// }
 var arrayInfo = [
   {
     id: 14,
@@ -844,9 +829,3 @@ if (localStorage.getItem("hisOrder") == null) {
 }
 
 var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
-// for (let i = 0; i < arrayHis.length; i++) {
-//   if (i == 1) {
-//     arrayHis[i].status = "da xu ly";
-//   }
-// }
-// setHistoryOrderLocalStorage(arrayHis);

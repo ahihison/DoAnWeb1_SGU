@@ -603,17 +603,26 @@ function clear() {
 //Xóa sản phẩm
 function deleteProduct(deletePro) {
   let ProductArray = JSON.parse(localStorage.getItem("product"));
+  var detailProducts = JSON.parse(localStorage.getItem("detailProduct"));
 
   for (let i = 0; i < ProductArray.length; i++) {
-    if (ProductArray[i].id == deletePro)
+    if (ProductArray[i].id == deletePro) {
       if (
         confirm(
           "Are you sure you want to delete this product? This action cannot be undone."
         )
-      )
+      ) {
         ProductArray.splice(i, 1);
+      }
+    }
+  }
+  for (var j = 0; j < detailProducts.length; j++) {
+    if (detailProducts[j].id == deletePro) {
+      detailProducts.splice(j, 1);
+    }
   }
   createProduct(ProductArray);
+  setDetailLocalStorage(detailProducts);
   showProductList(ProductArray);
 }
 
@@ -1047,3 +1056,28 @@ function getValueTime() {
   });
 }
 getValueTime();
+
+var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+var yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+
+new Chart("myChartDashboard", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [
+      {
+        fill: false,
+        lineTension: 0,
+        backgroundColor: "rgba(0,0,255,1.0)",
+        borderColor: "#99a9f6",
+        data: yValues,
+      },
+    ],
+  },
+  options: {
+    legend: { display: false },
+    scales: {
+      yAxes: [{ ticks: { min: 6, max: 16 } }],
+    },
+  },
+});

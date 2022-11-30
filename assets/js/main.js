@@ -19,6 +19,7 @@ var cartMobile = $(".cart-mobile");
 var myOrderMobile = $(".my-order-mobile");
 var logoutMobile = $(".logout-mobile");
 var signInOut = $(".signin-singout");
+
 var userAvatar = $(".user-avatar");
 var userSingOut = $(".option-user-signOut");
 var avatarMoblie = $(".avt-menu-mobile");
@@ -175,11 +176,13 @@ function Validator(options) {
             });
             if (check === false) {
               idPerson = arrayInfos.length + 1;
+
               arrayInfos.push({
                 id: arrayInfos.length + 1,
                 fullname: formValues.fullname,
                 email: formValues.email,
                 password: formValues.password,
+                usertype: "User",
               });
               console.log(arrayInfos.length + 1);
               if (flag === false) {
@@ -187,6 +190,7 @@ function Validator(options) {
               validation1.classList.remove("active");
               toastSuccess.classList.add("active");
               signInOut.classList.add("active");
+
               userAvatar.classList.add("active");
               setAccountLocalStorage(arrayInfos);
               checkSinginBuyPro = true;
@@ -203,7 +207,11 @@ function Validator(options) {
                 arrayInfos[i].usertype == "Admin"
               ) {
                 location.href = "admin.html";
-              } else {
+              } else if (
+                arrayInfos[i].email == formValues.email &&
+                arrayInfos[i].password == formValues.password &&
+                arrayInfos[i].usertype == "User"
+              ) {
                 var flag = true;
                 var arrayInfos = JSON.parse(localStorage.getItem("infor"));
                 arrayInfos.forEach((e) => {
@@ -215,6 +223,7 @@ function Validator(options) {
                     $(".message-text").innerHTML = "Login Successfully! ";
                     toastSuccess.classList.add("active");
                     signInOut.classList.add("active");
+
                     userAvatar.classList.add("active");
                     avatarMoblie.classList.add("active");
                     myOrderMobile.classList.add("active");
@@ -225,7 +234,7 @@ function Validator(options) {
                     idPerson = e.id;
 
                     var arrayHis = JSON.parse(localStorage.getItem("hisOrder"));
-
+                    console.log(arrayHis);
                     for (var i = 0; i < arrayHis.length; i++) {
                       if (arrayHis[i].idPerson == e.id) {
                         hisOrderUser(
@@ -502,6 +511,7 @@ modalContainer.addEventListener("click", (e) => {
 if (userSingOut) {
   userSingOut.addEventListener("click", () => {
     signInOut.classList.remove("active");
+
     userAvatar.classList.remove("active");
 
     window.location.reload();
@@ -687,7 +697,6 @@ function renderProducAdidas() {
 }
 function renderProductFilter(start, end) {
   html = "";
-
   const content = productFilter.map((item, index) => {
     if (index >= start && index < end) {
       html += `<div class="pro">`;
@@ -899,7 +908,6 @@ function innerDetail() {
           }
         }
         getIndexProduct(value);
-
         changePrice(i);
         productDetail.classList.add("active");
         containerDetail.classList.add("active");
@@ -969,7 +977,6 @@ function innerDetail() {
               value = j;
             }
           }
-          console.log("value nè", value);
           getIndexProduct(value);
           changerSmallProduct();
           changePrice(i);
@@ -987,7 +994,6 @@ function renderListPage(totalPage) {
   for (let i = 2; i <= totalPage; i++) {
     html += `<button>${i}</button>`;
   }
-
   $(".number-page").innerHTML = html;
 }
 function changePage() {
@@ -1033,7 +1039,6 @@ function changePageFilter() {
     currentPage[i].addEventListener("click", () => {
       const value = i + 1;
       currentPages = value;
-
       getCurentPage(currentPages);
       renderProductFilter(start, end);
       innerDetail();
@@ -1074,7 +1079,6 @@ gucciProduct.addEventListener("click", () => {
   pagingItem2.classList.remove("active");
   gucciProduct.classList.add("active");
   allProduct.classList.add("color");
-
   adidasProduct.classList.remove("active");
   start = 0;
   end = perPage;
@@ -1128,7 +1132,6 @@ allProduct.addEventListener("click", () => {
   renderProduct(start, end);
   renderListPage(totalPage);
   currentPages = 1;
-
   changePage();
   innerDetail();
 });
@@ -1195,7 +1198,6 @@ function btnChangepageGucci(btnNext, btnPrev, totalPage) {
         prevBtnActive.classList.add("active");
       }
     }
-
     getCurentPage(currentPages);
     renderProductGucci(start, end);
     innerDetail();
@@ -1660,7 +1662,6 @@ var priceMin = 0;
 var priceMax = 120;
 var brandSelect = [];
 var brandSelectTemp = [];
-
 function filterProducts(filterValue) {
   // pagingItem.classList.add("active");
 
@@ -1744,3 +1745,19 @@ btnSearch.addEventListener("click", () => {
 
   sectionP1.classList.toggle("active");
 });
+
+let slideIndex = 0;
+showSlides();
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {
+    slideIndex = 1;
+  }
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 3000); // Change image every 10 seconds
+}
