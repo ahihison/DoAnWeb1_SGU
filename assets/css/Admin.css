@@ -761,6 +761,18 @@ tr td {
   opacity: 0.5;
 }
 
+.calander {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 20px;
+  font-weight: 600px;
+}
+.time-get,
+.time-get2 {
+  height: 100%;
+  margin: 10px;
+  cursor: pointer;
+}
 @media only screen and (min-width: 481px) and (max-width: 739px) {
   nav {
     width: 70px;

@@ -196,7 +196,6 @@ const product = [
 function setItemLocalStorage(product) {
   localStorage.setItem("product", JSON.stringify(product));
 }
-
 var products = JSON.parse(localStorage.getItem("product"));
 if (localStorage.getItem("product") == null) {
   setItemLocalStorage(product);
@@ -753,7 +752,6 @@ var arrayInfo = [
 if (localStorage.getItem("infor") == null) {
   setAccountLocalStorage(arrayInfo);
 }
-
 function setAccountLocalStorage(arrayInfo) {
   localStorage.setItem("infor", JSON.stringify(arrayInfo));
 }

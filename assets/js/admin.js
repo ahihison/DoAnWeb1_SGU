@@ -16,9 +16,137 @@ var allClick = document.querySelector(".all-product");
 var chart = document.querySelector(".chart-admin");
 var chartGucci = document.querySelector(".chart-Gucci");
 var chartAdidas = document.querySelector(".chart-Adidas");
-var options = document.querySelectorAll("select option");
+// var options = document.querySelectorAll("select option");
 var totalHis;
 var totalGucci;
+var getTimeCalander1 = document.querySelector(".time-get");
+var getTimeCalander2 = document.querySelector(".time-get2");
+var time1 = [];
+var time2 = [];
+var date = [];
+var checkDraw = false;
+var totalBrand;
+getTimeCalander1.addEventListener("change", () => {
+  time1 = getTimeCalander1.value.split("-");
+  console.log(time1);
+});
+
+function handleChartTime2(time1, time2, arrayHis, brand) {
+  countGucci = 0;
+  totalMoneyAdidas = 0;
+  totalMoneyGucci = 0;
+  totalMoney = 0;
+  sumAll = 0;
+  totalBrand = 0;
+  countAdidas = 0;
+  for (let i = 0; i < arrayHis.length; i++) {
+    if (arrayHis[i].details.includes(brand)) {
+      totalBrand += Number(arrayHis[i].details.slice(-1));
+    }
+    if (brand == "All") {
+      totalBrand += Number(arrayHis[i].details.slice(-1));
+    }
+
+    date = arrayHis[i].date.split("/");
+    var from = new Date(time1[0], parseInt(time1[1]) - 1, time1[2]);
+    var to = new Date(time2[0], parseInt(time2[1]) - 1, time2[2]);
+    var check = new Date(date[2], parseInt(date[0]) - 1, date[1]);
+
+    // if (arrayHis[i].details.includes(brand)) {
+    //   if (
+    //     Number(time1[0]) <= Number(year) &&
+    //     Number(time2[0] >= Number(year))
+    //   ) {
+    //     console.log(day, month, year);
+    //     console.log("year:", year);
+    //     console.log("time1:", time1);
+    //     console.log("time2", time2);
+
+    //     if (Number(year) == time1[0] && year < time2[0]) {
+    //       console.log("ahjdgjkashgdkasgdlak");
+    //       checkHandle = true;
+    //       if (month > time1[1] && month <= time2[1]) {
+    //         console.log("test 1");
+    //         handleTime(brand, arrayHis[i]);
+    //       } else if (month == time1[1] && month <= time2[1]) {
+    //         console.log("asdjshadukahg");
+    //         if (day >= time1[2]) {
+    //           console.log("iejda");
+    //           handleTime(brand, arrayHis[i]);
+    //         }
+    //       }
+    //     } else if (year == time2[0] && year > time1[0]) {
+    //       checkHandle = true;
+    //       console.log("test 2");
+
+    //       if (month < time2[1] && month >= time1[1]) {
+    //         handleTime(brand, arrayHis[i]);
+    //       } else if (month == time2[1] && month >= time1[1]) {
+    //         if (day <= time2[2]) {
+    //           handleTime(brand, arrayHis[i]);
+    //         }
+    //       }
+    //     } else if (year == time1[0] && year == time2[0]) {
+    //       console.log("test 3");
+
+    //       checkHandle = true;
+    //       if (
+    //         Number(time1[1]) <= Number(month) &&
+    //         Number(time2[1] >= Number(month))
+    //       ) {
+    //         if (Number(month) == time1[1] && month < time2[1]) {
+    //           if (day >= time1[2]) {
+    //             handleTime(brand, arrayHis[i]);
+    //           }
+    //         } else if (month == time2[1] && month > time1[0]) {
+    //           if (day <= time2[1]) {
+    //             console.log("test 4");
+    //             handleTime(brand, arrayHis[i]);
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    //   // if (checkHandle == false) {
+    //   //   console.log("test 6");
+
+    //   //   handleChartTime(brand, arrayHis[i]);
+    //   // }
+    // }
+    if (check > from && check < to) {
+      console.log("!23");
+      if (arrayHis[i].details.includes(brand)) {
+        handleTime(brand, arrayHis[i]);
+        console.log("brnad", brand);
+      }
+      if (brand == "All") {
+        if (arrayHis[i].details.includes("Adidas")) {
+          handleTime("Adidas", arrayHis[i]);
+        } else if (arrayHis[i].details.includes("Gucci")) {
+          handleTime("Gucci", arrayHis[i]);
+        }
+      }
+
+      checkDraw = true;
+    }
+  }
+  console.log("adidas", totalBrand);
+  sumAll = countAdidas + countGucci;
+  totalMoney = totalMoneyAdidas + totalMoneyGucci;
+}
+function handleTime(brand, arrayHisI) {
+  if (brand == "Adidas") {
+    countAdidas += Number(arrayHisI.details.slice(-1));
+    totalMoneyAdidas +=
+      Number(arrayHisI.details.slice(-1)) * Number(arrayHisI.cost);
+    console.log("dem ", countAdidas);
+  } else if (brand == "Gucci") {
+    totalMoneyGucci +=
+      Number(arrayHisI.details.slice(-1)) * Number(arrayHisI.cost);
+    countGucci += Number(arrayHisI.details.slice(-1));
+    console.log("dem 2", countGucci);
+  }
+}
 gucciClick.addEventListener("click", () => {
   countAdidas = 0;
   countGucci = 0;
@@ -30,126 +158,111 @@ gucciClick.addEventListener("click", () => {
   allClick.classList.add("color");
   adidasClick.classList.remove("active");
   countGucci = 0;
-  for (var i = 0; i < options.length; i++) {
-    options[i].selected = options[i].defaultSelected;
-  }
+  getTimeCalander1.value = "";
+  getTimeCalander2.value = "";
+  innerStatisticsGucci(0, 0, 0);
   chart.innerHTML = `<canvas id="myChartGucci" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
   check = "gucci";
-  handleChartTime("all", arrayHis);
-  innerStatisticsGucci(countGucci, countGucci, totalMoneyGucci);
-  totalGucci = countGucci;
-  drawChartGucci();
   if (check == "gucci") {
-    timeOption.addEventListener("change", () => {
-      countAdidas = 0;
-      countGucci = 0;
-      totalMoneyAdidas = 0;
-      totalMoneyGucci = 0;
-      totalMoney = 0;
-      sumAll = 0;
-      chart.innerHTML = `<canvas id="myChartGucci" style="width: 100%; max-width: 600px"></canvas>`;
-      if (timeOption.value == "week" && check == "gucci") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
+    getTimeCalander1.addEventListener("change", () => {
+      time1 = getTimeCalander1.value.split("-");
+
+      chart.innerHTML = `<canvas id="myChartGucci" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+
+      handleChartTime2(time1, time2, arrayHis, "Gucci");
+      innerStatisticsGucci(totalBrand, countGucci, totalMoneyGucci);
+      if (checkDraw == true) {
         drawChartGucci();
-      } else if (timeOption.value == "month" && check == "gucci") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
+        checkDraw = false;
+      }
+    });
+    getTimeCalander2.addEventListener("change", () => {
+      time2 = getTimeCalander2.value.split("-");
+      handleChartTime2(time1, time2, arrayHis, "Gucci");
+      chart.innerHTML = `<canvas id="myChartGucci" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+      handleChartTime2(time1, time2, arrayHis, "Gucci");
+      innerStatisticsGucci(totalBrand, countGucci, totalMoneyGucci);
+      if (checkDraw == true) {
         drawChartGucci();
-      } else if (timeOption.value == "year" && check == "gucci") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
-        drawChartGucci();
-      } else if (timeOption.value == "all" && check == "gucci") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsGucci(totalGucci, countGucci, totalMoneyGucci);
-        drawChartGucci();
+        checkDraw = false;
       }
     });
   }
 });
-var totalAdidas;
+var totalBrand;
 adidasClick.addEventListener("click", () => {
+  getTimeCalander1.value = "";
+  getTimeCalander2.value = "";
   adidasClick.classList.add("active");
   allClick.classList.add("color");
   gucciClick.classList.remove("active");
-
-  for (var i = 0; i < options.length; i++) {
-    options[i].selected = options[i].defaultSelected;
-  }
+  innerStatisticsAdidas(0, 0, 0);
   check = "adidas";
-  chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px"></canvas>`;
-  handleChartTime("all", arrayHis);
+  chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
 
-  innerStatisticsAdidas(countAdidas, countAdidas, totalMoneyAdidas);
-  totalAdidas = countAdidas;
-  drawChartAdidas();
   if (check == "adidas") {
-    timeOption.addEventListener("change", () => {
-      chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px"></canvas>`;
+    getTimeCalander1.addEventListener("change", () => {
+      time1 = getTimeCalander1.value.split("-");
+      chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
 
-      if (timeOption.value == "week" && check == "adidas") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
+      handleChartTime2(time1, time2, arrayHis, "Adidas");
+      innerStatisticsAdidas(totalBrand, countAdidas, totalMoneyAdidas);
+
+      if (checkDraw == true) {
         drawChartAdidas();
-      } else if (timeOption.value == "month" && check == "adidas") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
+        checkDraw = false;
+      }
+    });
+    getTimeCalander2.addEventListener("change", () => {
+      time2 = getTimeCalander2.value.split("-");
+      chart.innerHTML = `<canvas id="myChartAdidas" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+      check = "Adidas";
+
+      handleChartTime2(time1, time2, arrayHis, "Adidas");
+      innerStatisticsAdidas(totalBrand, countAdidas, totalMoneyAdidas);
+      if (checkDraw == true) {
         drawChartAdidas();
-      } else if (timeOption.value == "year" && check == "adidas") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
-        drawChartAdidas();
-      } else if (timeOption.value == "year" && check == "adidas") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
-        drawChartAdidas();
-      } else if (timeOption.value == "all" && check == "adidas") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatisticsAdidas(totalAdidas, countAdidas, totalMoneyAdidas);
-        drawChartAdidas();
+        checkDraw = false;
       }
     });
   }
 });
 allClick.addEventListener("click", () => {
+  getTimeCalander1.value = "";
+  getTimeCalander2.value = "";
   allClick.classList.add("active");
   allClick.classList.remove("color");
   adidasClick.classList.remove("active");
   gucciClick.classList.remove("active");
-  for (var i = 0; i < options.length; i++) {
-    options[i].selected = options[i].defaultSelected;
-  }
+  innerStatistics(0, 0, 0, 0);
   check = "all";
   chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
-  handleChartTime("all", arrayHis);
-  innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
+  handleChartTime2(time1, time2, arrayHis, "All");
+  totalMoney = totalGucci + totalMoneyAdidas;
+
   drawChart();
   if (check == "all") {
-    timeOption.addEventListener("change", () => {
-      countAdidas = 0;
-      countGucci = 0;
-      totalMoneyAdidas = 0;
-      totalMoneyGucci = 0;
-      totalMoney = 0;
-      sumAll = 0;
-      chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
-      if (timeOption.value == "week" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
+    getTimeCalander1.addEventListener("change", () => {
+      time1 = getTimeCalander1.value.split("-");
+      chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+      handleChartTime2(time1, time2, arrayHis, "All");
+      innerStatistics(totalBrand, countAdidas, countGucci, totalMoney);
+      if (checkDraw == true) {
         drawChart();
-      } else if (timeOption.value == "month" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
+        checkDraw = false;
+      }
+    });
+    getTimeCalander2.addEventListener("change", () => {
+      time2 = getTimeCalander2.value.split("-");
+      handleChartTime2(time1, time2, arrayHis, "All");
+      chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+      handleChartTime2(time1, time2, arrayHis, "All");
+      console.log("coutn1 ", countAdidas);
+      console.log("coutn2 ", countGucci);
+      innerStatistics(totalBrand, countAdidas, countGucci, totalMoney);
+      if (checkDraw == true) {
         drawChart();
-      } else if (timeOption.value == "year" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
-        drawChart();
-      } else if (timeOption.value == "all" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
-        drawChart();
+        checkDraw = false;
       }
     });
   }
@@ -214,40 +327,41 @@ function handleChartTime(time, arrayHis) {
   }
 }
 function getTime() {
-  sumAll = 0;
-  handleChartTime("all", arrayHis);
-  for (var i = 0; i < options.length; i++) {
-    options[i].selected = options[i].defaultSelected;
-  }
+  getTimeCalander1.value = "";
+  getTimeCalander2.value = "";
+  allClick.classList.add("active");
+  allClick.classList.remove("color");
+  adidasClick.classList.remove("active");
+  gucciClick.classList.remove("active");
+  innerStatistics(0, 0, 0, 0);
   check = "all";
   chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
-  innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
+  handleChartTime2(time1, time2, arrayHis, "All");
+  totalMoney = totalGucci + totalMoneyAdidas;
+
   drawChart();
   if (check == "all") {
-    timeOption.addEventListener("change", () => {
-      countAdidas = 0;
-      countGucci = 0;
-      totalMoneyAdidas = 0;
-      totalMoneyGucci = 0;
-      totalMoney = 0;
-      sumAll = 0;
-      chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px"></canvas>`;
-      if (timeOption.value == "week" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
+    getTimeCalander1.addEventListener("change", () => {
+      time1 = getTimeCalander1.value.split("-");
+      chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+      handleChartTime2(time1, time2, arrayHis, "All");
+      innerStatistics(totalBrand, countAdidas, countGucci, totalMoney);
+      if (checkDraw == true) {
         drawChart();
-      } else if (timeOption.value == "month" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
+        checkDraw = false;
+      }
+    });
+    getTimeCalander2.addEventListener("change", () => {
+      time2 = getTimeCalander2.value.split("-");
+      handleChartTime2(time1, time2, arrayHis, "All");
+      chart.innerHTML = `<canvas id="myChart" style="width: 100%; max-width: 600px; font-size:20px;"></canvas>`;
+      handleChartTime2(time1, time2, arrayHis, "All");
+      console.log("coutn1 ", countAdidas);
+      console.log("coutn2 ", countGucci);
+      innerStatistics(totalBrand, countAdidas, countGucci, totalMoney);
+      if (checkDraw == true) {
         drawChart();
-      } else if (timeOption.value == "year" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
-        drawChart();
-      } else if (timeOption.value == "all" && check == "all") {
-        handleChartTime(timeOption.value, arrayHis);
-        innerStatistics(sumAll, countAdidas, countGucci, totalMoney);
-        drawChart();
+        checkDraw = false;
       }
     });
   }
@@ -308,7 +422,7 @@ function innerStatisticsGucci(total, gucci, cost) {
 
 function drawChartAdidas() {
   var xValues = ["All", "Adidas", ""];
-  var yValues = [totalAdidas, countAdidas, 0];
+  var yValues = [totalBrand, countAdidas, 0];
   var barColors = ["red", "green"];
 
   new Chart("myChartAdidas", {
@@ -341,7 +455,7 @@ function drawChartAdidas() {
 
 function drawChartGucci() {
   var xValues = ["All", "Gucci", ""];
-  var yValues = [totalGucci, countGucci, 0];
+  var yValues = [totalBrand, countGucci, 0];
   var barColors = ["pink", "yellow"];
   new Chart("myChartGucci", {
     type: "bar",
